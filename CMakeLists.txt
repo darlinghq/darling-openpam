@@ -5,13 +5,8 @@ include(InstallSymlink)
 # Automatically escape macros
 cmake_policy(SET CMP0005 NEW)
 
-SET(CMAKE_INSTALL_RPATH "${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_LIBDIR}/darling")
-SET(CMAKE_BUILD_WITH_INSTALL_RPATH TRUE)
-SET(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
-
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -msse -msse2 -msse3 -nostdinc -fblocks -fPIC")
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -msse -msse2 -msse3 -nostdinc -nostdinc++ -fblocks -fPIC")
-set(CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} -nostdlib -fPIC -Wl,--version-script=${DARLING_TOP_DIRECTORY}/darwin.map")
 
 add_definitions(
 	-D__DARWIN_UNIX03
@@ -27,7 +22,8 @@ include_directories(
 	${DARLING_TOP_DIRECTORY}/platform-include
 )
 
-add_library(pam.2 SHARED
+set(DYLIB_INSTALL_NAME "/usr/lib/libpam.2.dylib")
+add_darling_library(pam.2 SHARED
 	lib/openpam_borrow_cred.c
 	lib/openpam_configure.c
 	lib/openpam_dispatch.c
@@ -72,26 +68,38 @@ add_library(pam.2 SHARED
 	lib/pam_unsetenv.c
 )
 
-add_library(pam.1 SHARED
+set(DYLIB_INSTALL_NAME "/usr/lib/libpam.1.dylib")
+add_darling_library(pam.1 SHARED
 	compat/pam_shim.c
 )
 
-add_library(pam_deny SHARED
+set(DYLIB_INSTALL_NAME "/usr/lib/pam/pam_deny.so.2")
+add_darling_library(pam_deny SHARED
 	modules/pam_deny/pam_deny.c
 )
+set_target_properties(pam_deny PROPERTIES
+	SUFFIX ".so"
+	PREFIX ""
+)
 
-add_library(pam_permit SHARED
+set(DYLIB_INSTALL_NAME "/usr/lib/pam/pam_permit.so.2")
+add_darling_library(pam_permit SHARED
 	modules/pam_permit/pam_permit.c
 )
+set_target_properties(pam_permit PROPERTIES
+	SUFFIX ".so"
+	PREFIX ""
+)
+
 
 target_link_libraries(pam.2 system)
 target_link_libraries(pam.1 system)
 target_link_libraries(pam_deny system)
 target_link_libraries(pam_permit system)
 
-install(TARGETS pam.1 pam.2 DESTINATION ${CMAKE_INSTALL_LIBDIR}/darling)
-InstallSymlink(pam.so ${CMAKE_INSTALL_LIBDIR}/darling/libpam.1.so)
-install(TARGETS pam_deny pam_permit DESTINATION ${CMAKE_INSTALL_LIBDIR}/darling/pam)
+install(TARGETS pam.1 pam.2 DESTINATION libexec/darling/usr/lib)
+InstallSymlink(libpam.2.so ${CMAKE_INSTALL_PREFIX}/libexec/darling/usr/lib/libpam.dylib)
+install(TARGETS pam_deny pam_permit DESTINATION libexec/darling/usr/lib/pam)
 
 install(DIRECTORY man DESTINATION libexec/darling/usr/share)
 install(DIRECTORY pam.d DESTINATION libexec/darling/etc)
