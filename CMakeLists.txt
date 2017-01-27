@@ -67,16 +67,19 @@ add_darling_library(pam.2 SHARED
 	lib/pam_vprompt.c
 	lib/pam_unsetenv.c
 )
+make_fat(pam.2)
 
 set(DYLIB_INSTALL_NAME "/usr/lib/libpam.1.dylib")
 add_darling_library(pam.1 SHARED
 	compat/pam_shim.c
 )
+make_fat(pam.1)
 
 set(DYLIB_INSTALL_NAME "/usr/lib/pam/pam_deny.so.2")
 add_darling_library(pam_deny SHARED
 	modules/pam_deny/pam_deny.c
 )
+make_fat(pam_deny)
 set_target_properties(pam_deny PROPERTIES
 	SUFFIX ".so"
 	PREFIX ""
@@ -86,6 +89,7 @@ set(DYLIB_INSTALL_NAME "/usr/lib/pam/pam_permit.so.2")
 add_darling_library(pam_permit SHARED
 	modules/pam_permit/pam_permit.c
 )
+make_fat(pam_permit)
 set_target_properties(pam_permit PROPERTIES
 	SUFFIX ".so"
 	PREFIX ""
