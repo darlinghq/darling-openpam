@@ -18,7 +18,7 @@ add_definitions(
 include_directories(
 	${CMAKE_CURRENT_SOURCE_DIR}
 	${CMAKE_CURRENT_SOURCE_DIR}/include
-	
+
 	${DARLING_TOP_DIRECTORY}/platform-include
 )
 
@@ -102,7 +102,7 @@ target_link_libraries(pam_deny system)
 target_link_libraries(pam_permit system)
 
 install(TARGETS pam.1 pam.2 DESTINATION libexec/darling/usr/lib)
-InstallSymlink(libpam.2.so ${CMAKE_INSTALL_PREFIX}/libexec/darling/usr/lib/libpam.dylib)
+InstallSymlink(libpam.2.dylib ${CMAKE_INSTALL_PREFIX}/libexec/darling/usr/lib/libpam.dylib)
 install(TARGETS pam_deny pam_permit DESTINATION libexec/darling/usr/lib/pam)
 
 install(DIRECTORY man DESTINATION libexec/darling/usr/share)
