@@ -11,7 +11,7 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -msse -msse2 -msse3 -nostdinc -nostdinc+
 add_definitions(
 	-D__DARWIN_UNIX03
 	-DLIB_MAJ=2
-	-DOPENPAM_MODULES_DIR='/usr/lib/pam/\\$<SEMICOLON>/usr/local/lib/pam/'
+	-DOPENPAM_MODULES_DIR="/usr/lib/pam/\\$<SEMICOLON>/usr/local/lib/pam/"
 	-D_GNU_SOURCE
 )
 
