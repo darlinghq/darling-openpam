@@ -1,25 +1,20 @@
 project(openpam)
 
-include(InstallSymlink)
-
 # Automatically escape macros
 cmake_policy(SET CMP0005 NEW)
 
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -msse -msse2 -msse3 -nostdinc -fblocks -fPIC")
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -msse -msse2 -msse3 -nostdinc -nostdinc++ -fblocks -fPIC")
-
-add_definitions(
-	-D__DARWIN_UNIX03
-	-DLIB_MAJ=2
-	-DOPENPAM_MODULES_DIR="/usr/lib/pam/\\$<SEMICOLON>/usr/local/lib/pam/"
-	-D_GNU_SOURCE
+add_compile_options(
+	-nostdinc
+	-fblocks
 )
 
-include_directories(
+add_definitions(
+	-DOPENPAM_MODULES_DIR="/usr/lib/pam/\\$<SEMICOLON>/usr/local/lib/pam/"
+)
+
+include_directories(BEFORE
 	${CMAKE_CURRENT_SOURCE_DIR}
 	${CMAKE_CURRENT_SOURCE_DIR}/include
-
-	${DARLING_TOP_DIRECTORY}/platform-include
 )
 
 set(DYLIB_INSTALL_NAME "/usr/lib/libpam.2.dylib")
