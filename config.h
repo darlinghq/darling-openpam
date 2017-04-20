@@ -47,7 +47,7 @@
 /* #undef OPENPAM_DEBUG */
 
 /* OpenPAM modules directory */
-#define OPENPAM_MODULES_DIR "/usr/lib/pam/"
+#define OPENPAM_MODULES_DIR "/usr/lib/pam/;/usr/local/lib/pam/"
 
 /* Name of package */
 #define PACKAGE "openpam"

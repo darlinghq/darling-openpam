@@ -6,10 +6,7 @@ cmake_policy(SET CMP0005 NEW)
 add_compile_options(
 	-nostdinc
 	-fblocks
-)
-
-add_definitions(
-	-DOPENPAM_MODULES_DIR="/usr/lib/pam/\\$<SEMICOLON>/usr/local/lib/pam/"
+	-includeconfig.h
 )
 
 include_directories(BEFORE
