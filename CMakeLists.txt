@@ -73,7 +73,7 @@ add_darling_library(pam_deny SHARED
 )
 make_fat(pam_deny)
 set_target_properties(pam_deny PROPERTIES
-	SUFFIX ".so"
+	SUFFIX ".so.2"
 	PREFIX ""
 )
 
@@ -83,7 +83,7 @@ add_darling_library(pam_permit SHARED
 )
 make_fat(pam_permit)
 set_target_properties(pam_permit PROPERTIES
-	SUFFIX ".so"
+	SUFFIX ".so.2"
 	PREFIX ""
 )
 
@@ -99,3 +99,5 @@ install(TARGETS pam_deny pam_permit DESTINATION libexec/darling/usr/lib/pam)
 
 install(DIRECTORY man DESTINATION libexec/darling/usr/share)
 install(DIRECTORY pam.d DESTINATION libexec/darling/etc)
+
+add_subdirectory(pam_modules)

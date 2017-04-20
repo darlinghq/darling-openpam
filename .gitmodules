@@ -1,0 +1,3 @@
+[submodule "pam_modules"]
+	path = pam_modules
+	url = ../darling-pam_modules.git
