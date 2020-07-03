@@ -6,58 +6,63 @@ cmake_policy(SET CMP0005 NEW)
 add_compile_options(
 	-nostdinc
 	-fblocks
-	-includeconfig.h
+)
+
+add_compile_definitions(
+	LIB_MAJ=2
+	"OPENPAM_MODULES_DIR=\"/usr/lib/pam/\;/usr/local/lib/pam/\""
+	_GNU_SOURCE
 )
 
 include_directories(BEFORE
-	${CMAKE_CURRENT_SOURCE_DIR}
-	${CMAKE_CURRENT_SOURCE_DIR}/include
+	${CMAKE_CURRENT_SOURCE_DIR}/openpam
+	${CMAKE_CURRENT_SOURCE_DIR}/openpam/include
 )
 
 set(DYLIB_INSTALL_NAME "/usr/lib/libpam.2.dylib")
 add_darling_library(pam.2 SHARED
-	lib/openpam_borrow_cred.c
-	lib/openpam_configure.c
-	lib/openpam_dispatch.c
-	lib/openpam_dynamic.c
-	lib/openpam_findenv.c
-	lib/openpam_free_data.c
-	lib/openpam_free_envlist.c
-	lib/openpam_get_option.c
-	lib/openpam_load.c
-	lib/openpam_log.c
-	lib/openpam_nullconv.c
-	lib/openpam_readline.c
-	lib/openpam_restore_cred.c
-	lib/openpam_set_option.c
-	lib/openpam_static.c
-	lib/openpam_ttyconv.c
-	lib/pam_acct_mgmt.c
-	lib/pam_authenticate.c
-	lib/pam_chauthtok.c
-	lib/pam_close_session.c
-	lib/pam_end.c
-	lib/pam_error.c
-	lib/pam_get_authtok.c
-	lib/pam_get_data.c
-	lib/pam_get_item.c
-	lib/pam_get_user.c
-	lib/pam_getenv.c
-	lib/pam_getenvlist.c
-	lib/pam_info.c
-	lib/pam_open_session.c
-	lib/pam_prompt.c
-	lib/pam_putenv.c
-	lib/pam_set_data.c
-	lib/pam_set_item.c
-	lib/pam_setcred.c
-	lib/pam_setenv.c
-	lib/pam_start.c
-	lib/pam_strerror.c
-	lib/pam_verror.c
-	lib/pam_vinfo.c
-	lib/pam_vprompt.c
-	lib/pam_unsetenv.c
+	openpam/lib/openpam_borrow_cred.c
+	openpam/lib/openpam_configure.c
+	openpam/lib/openpam_dispatch.c
+	openpam/lib/openpam_dynamic.c
+	openpam/lib/openpam_findenv.c
+	openpam/lib/openpam_free_data.c
+	openpam/lib/openpam_free_envlist.c
+	openpam/lib/openpam_get_option.c
+	openpam/lib/openpam_load.c
+	openpam/lib/openpam_log.c
+	openpam/lib/openpam_nullconv.c
+	openpam/lib/openpam_readline.c
+	openpam/lib/openpam_restore_cred.c
+	openpam/lib/openpam_set_option.c
+	openpam/lib/openpam_static.c
+	openpam/lib/openpam_ttyconv.c
+	openpam/lib/pam_acct_mgmt.c
+	openpam/lib/pam_authenticate.c
+	openpam/lib/pam_chauthtok.c
+	openpam/lib/pam_close_session.c
+	openpam/lib/pam_end.c
+	openpam/lib/pam_error.c
+	openpam/lib/pam_get_authtok.c
+	openpam/lib/pam_get_data.c
+	openpam/lib/pam_get_item.c
+	openpam/lib/pam_get_user.c
+	openpam/lib/pam_getenv.c
+	openpam/lib/pam_getenvlist.c
+	openpam/lib/pam_info.c
+	openpam/lib/pam_open_session.c
+	openpam/lib/pam_prompt.c
+	openpam/lib/pam_putenv.c
+	openpam/lib/pam_set_data.c
+	openpam/lib/pam_set_item.c
+	openpam/lib/pam_setcred.c
+	openpam/lib/pam_setenv.c
+	openpam/lib/pam_start.c
+	openpam/lib/pam_strerror.c
+	openpam/lib/pam_unsetenv.c
+	openpam/lib/pam_verror.c
+	openpam/lib/pam_vinfo.c
+	openpam/lib/pam_vprompt.c
 )
 make_fat(pam.2)
 
@@ -69,7 +74,7 @@ make_fat(pam.1)
 
 set(DYLIB_INSTALL_NAME "/usr/lib/pam/pam_deny.so.2")
 add_darling_library(pam_deny SHARED
-	modules/pam_deny/pam_deny.c
+	openpam/modules/pam_deny/pam_deny.c
 )
 make_fat(pam_deny)
 set_target_properties(pam_deny PROPERTIES
@@ -79,7 +84,7 @@ set_target_properties(pam_deny PROPERTIES
 
 set(DYLIB_INSTALL_NAME "/usr/lib/pam/pam_permit.so.2")
 add_darling_library(pam_permit SHARED
-	modules/pam_permit/pam_permit.c
+	openpam/modules/pam_permit/pam_permit.c
 )
 make_fat(pam_permit)
 set_target_properties(pam_permit PROPERTIES
@@ -97,7 +102,7 @@ install(TARGETS pam.1 pam.2 DESTINATION libexec/darling/usr/lib)
 InstallSymlink(libpam.2.dylib ${CMAKE_INSTALL_PREFIX}/libexec/darling/usr/lib/libpam.dylib)
 install(TARGETS pam_deny pam_permit DESTINATION libexec/darling/usr/lib/pam)
 
-install(DIRECTORY man DESTINATION libexec/darling/usr/share)
+install(DIRECTORY openpam/doc/man DESTINATION libexec/darling/usr/share)
 install(DIRECTORY pam.d DESTINATION libexec/darling/etc)
 
 add_subdirectory(pam_modules)
