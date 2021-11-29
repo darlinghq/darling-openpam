@@ -102,7 +102,7 @@ install(TARGETS pam.1 pam.2 DESTINATION libexec/darling/usr/lib)
 InstallSymlink(libpam.2.dylib ${CMAKE_INSTALL_PREFIX}/libexec/darling/usr/lib/libpam.dylib)
 install(TARGETS pam_deny pam_permit DESTINATION libexec/darling/usr/lib/pam)
 
-install(DIRECTORY openpam/doc/man DESTINATION libexec/darling/usr/share)
+#install(DIRECTORY openpam/doc/man DESTINATION libexec/darling/usr/share)
 install(DIRECTORY pam.d DESTINATION libexec/darling/etc)
 
 add_subdirectory(pam_modules)
