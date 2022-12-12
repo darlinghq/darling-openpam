@@ -105,4 +105,4 @@ install(TARGETS pam_deny pam_permit DESTINATION libexec/darling/usr/lib/pam)
 #install(DIRECTORY openpam/doc/man DESTINATION libexec/darling/usr/share)
 install(DIRECTORY pam.d DESTINATION libexec/darling/etc)
 
-add_subdirectory(pam_modules)
+add_subdirectory(darling/submodules/pam_modules)
